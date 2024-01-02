@@ -1,6 +1,7 @@
 # Last changed on 27/12/2023
 # Last changed is 409 -435 disabled condition 5 disabled
-
+# last changed on 28/12/2023 disabled condition 4
+# last changed on 02/01/2024 added new field to Project resp to CPROLEAD
 
 import json
 from datetime import datetime
@@ -82,7 +83,7 @@ def for_710(empid2,bamboo_input,emp_id,bamboo_name_id,bamboo_ID,date_for_bamboo,
             if items.get(emp_id)==empid2 or items.get(bamboo_name_id)== empid2:
                 Bamboo_ID=items.get(bamboo_ID)
                 if Bamboo_ID==None or len(Bamboo_ID)==0:
-                    Bamboo_ID=converted_input.get("CPRORESPEM")
+                    Bamboo_ID=converted_input.get("CPROLEAD")
                 Employee_ID=items.get(emp_id)
                 Employee_Text=items.get(bamboo_name_id)
                 employee_termination_date=items.get(date_for_bamboo)
@@ -90,12 +91,12 @@ def for_710(empid2,bamboo_input,emp_id,bamboo_name_id,bamboo_ID,date_for_bamboo,
             else:
                 # if employee Id is null
                 if (empid2==None or len(empid2)==0):
-                    empid2=converted_input.get("CPRORESPEM")
+                    empid2=converted_input.get("CPROLEAD")
                     if items.get(emp_id)==empid2:
                         Bamboo_ID=items.get(bamboo_ID)
                         employee_termination_date=items.get(date_for_bamboo)
                         if Bamboo_ID==None or len(Bamboo_ID)==0:
-                            Bamboo_ID=converted_input.get("CPRORESPEM")   
+                            Bamboo_ID=converted_input.get("CPROLEAD")   
                             # Employee_ID=items.get(emp_id)
                         # Bamboo_ID=Employee_ID
                         # Employee_Text=items.get("TZ8A3365DF41600F8C") 
@@ -105,11 +106,11 @@ def for_710(empid2,bamboo_input,emp_id,bamboo_name_id,bamboo_ID,date_for_bamboo,
             employee=Bamboo_ID
         else:
             # employee=empid2             CPRORESPEM
-            employee=converted_input.get("CPRORESPEM") 
+            employee=converted_input.get("CPROLEAD") 
         #for employee who are not having bamboo record
         if (employee_termination_date==None):
             employee_termination_date="9999-12-30"
-            employee=converted_input.get("CPRORESPEM")
+            employee=converted_input.get("CPROLEAD")
          #check cpondition for project not closed and employee not terminated
         if (converted_input.get("TPROPRSTLC")!="Closed") and ("9999" in employee_termination_date):
             Approvers_List2={
@@ -159,6 +160,7 @@ def main(input):
     Cs_previous_project_lead_ID=input["Cs_previous_project_lead_ID"]
     TPROJECT=input["TPROJECT"]
     TPROPRSTLC=input["TPROPRSTLC"]
+    CPROLEAD=input["CPROLEAD"]
     date_for_bamboo=input["date_for_bamboo"]
     bamboo_ID=input["Bamboo_ID_for_Bamboo"]
     emp_id=input["Employee_ID_for_Bamboo"]
@@ -205,9 +207,9 @@ def main(input):
                     "Cs_previous_person_responsible_ID":sap_items.get(Cs_previous_person_responsible_ID), #Cs1ANs224F913DDFEFA5B -- Previous Person Responsible ID ID
                     "Cs_previous_project_lead_ID":sap_items.get(Cs_previous_project_lead_ID), # Cs1ANs7515DDBE8212D62 --Previous Project Lead ID ID
                     "TPROJECT":sap_items.get(TPROJECT),
-                    "TPROPRSTLC":sap_items.get(TPROPRSTLC)
+                    "TPROPRSTLC":sap_items.get(TPROPRSTLC),
+                    "CPROLEAD":sap_items.get(CPROLEAD)
                 }
-            
             
 
             try:
@@ -281,8 +283,8 @@ def main(input):
                 continue
             # ------------------------------------------
             try:
-                #PRF declaration from CPRORESPEM
-                PRF=converted_input.get("CPRORESPEM")
+                #PRF declaration from CPRORESPEM changed to CPROLEAD 
+                PRF=converted_input.get("CPROLEAD")
                 if PRF !=None and len(PRF)!=0:
                     PRF=PRF
                 else:
@@ -382,29 +384,29 @@ def main(input):
                 
                 # 4 If PRF is populated and PL is [blank] and PRF is changed today, then send delete for previous PRF and 
                     # add for new PRF only
-                if (PRF!= None and len(PRF) >0) and (proj_lead== None ):
-                    if (last_pr_date!=None):
-                        if (last_pr_date.date()==today_date):
-                            values_760.append({"condition":4,"items":sap_items,"emp":prev_resp,"emp_type":"prev_resp"})
-                            called_count_760=called_count_760+1
-                            #calling 760 method to add
-                            result=for_760(prev_resp,bamboo_input,emp_id,bamboo_name_id,bamboo_ID,date_for_bamboo,converted_input)
-                            if result.get("error")!=None:
-                                failed_reason_list.append(result.get("error"))
-                                error_list.append(sap_items)
-                            if result.get("Approvers_List")!=None:
+                # if (PRF!= None and len(PRF) >0) and (proj_lead== None ):
+                #     if (last_pr_date!=None):
+                #         if (last_pr_date.date()==today_date):
+                #             values_760.append({"condition":4,"items":sap_items,"emp":prev_resp,"emp_type":"prev_resp"})
+                #             called_count_760=called_count_760+1
+                #             #calling 760 method to add
+                #             result=for_760(prev_resp,bamboo_input,emp_id,bamboo_name_id,bamboo_ID,date_for_bamboo,converted_input)
+                #             if result.get("error")!=None:
+                #                 failed_reason_list.append(result.get("error"))
+                #                 error_list.append(sap_items)
+                #             if result.get("Approvers_List")!=None:
                                 
-                                Approvers_List1_array.append(result.get("Approvers_List"))
+                #                 Approvers_List1_array.append(result.get("Approvers_List"))
 
-                            called_count_710=called_count_710+1
-                            #calling 710 method to add
-                            result_710=for_710(PRF,bamboo_input,emp_id,bamboo_name_id,bamboo_ID,date_for_bamboo,converted_input)
-                            if result_710.get("error")!=None:
-                                failed_reason_list.append(result_710.get("error"))
-                                error_list.append(sap_items)
-                            if result_710.get("Approvers_List")!=None:
-                                Approvers_List1_array.append(result_710.get("Approvers_List"))
-                            continue
+                #             called_count_710=called_count_710+1
+                #             #calling 710 method to add
+                #             result_710=for_710(PRF,bamboo_input,emp_id,bamboo_name_id,bamboo_ID,date_for_bamboo,converted_input)
+                #             if result_710.get("error")!=None:
+                #                 failed_reason_list.append(result_710.get("error"))
+                #                 error_list.append(sap_items)
+                #             if result_710.get("Approvers_List")!=None:
+                #                 Approvers_List1_array.append(result_710.get("Approvers_List"))
+                #             continue
                 
                 #5. If PRF is populated and PL is [blank] and PL is changed to populated today, then send delete for PRF and
                 #     add for new PL.
@@ -464,25 +466,23 @@ def main(input):
                         if (last_pr_date.date()==today_date):
                             #calling 760 method to add
                             values_760.append({"condition":7,"items":sap_items,"emp":prev_lead,"emp_type":"prev_lead"})
-
                             called_count_760=called_count_760+1
                             result=for_760(prev_lead,bamboo_input,emp_id,bamboo_name_id,bamboo_ID,date_for_bamboo,converted_input)
-                    if result.get("error")!=None:
-                        failed_reason_list.append(result.get("error"))
-                        error_list.append(sap_items)
-                    if result.get("Approvers_List")!=None:
-                        
-                        Approvers_List1_array.append(result.get("Approvers_List"))
+                            if result.get("error")!=None:
+                                failed_reason_list.append(result.get("error"))
+                                error_list.append(sap_items)
+                            if result.get("Approvers_List")!=None:
+                                Approvers_List1_array.append(result.get("Approvers_List"))
 
-                    called_count_710=called_count_710+1
-                    #calling 710 method to add
-                    result_710=for_710(PRF,bamboo_input,emp_id,bamboo_name_id,bamboo_ID,date_for_bamboo,converted_input)
-                    if result_710.get("error")!=None:
-                        failed_reason_list.append(result_710.get("error"))
-                        error_list.append(sap_items)
-                    if result_710.get("Approvers_List")!=None:
-                        Approvers_List1_array.append(result_710.get("Approvers_List"))
-                    continue
+                            called_count_710=called_count_710+1
+                            #calling 710 method to add
+                            result_710=for_710(PRF,bamboo_input,emp_id,bamboo_name_id,bamboo_ID,date_for_bamboo,converted_input)
+                            if result_710.get("error")!=None:
+                                failed_reason_list.append(result_710.get("error"))
+                                error_list.append(sap_items)
+                            if result_710.get("Approvers_List")!=None:
+                                Approvers_List1_array.append(result_710.get("Approvers_List"))
+                            continue
 
             except Exception as e:
                 failed_reason_list.append( f"${e} while adding new conditions")

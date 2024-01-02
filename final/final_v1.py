@@ -423,20 +423,20 @@ def main(input):
                         if (last_pr_date.date()==today_date):
                             called_count_760=called_count_760+1
                             result=for_760(prev_lead,bamboo_input,emp_id,bamboo_name_id,bamboo_ID,date_for_bamboo,converted_input)
-                    if result.get("error")!=None:
-                        failed_reason_list.append(result.get("error"))
-                        error_list.append(sap_items)
-                    if result.get("Approvers_List")!=None:
-                        Approvers_List1_array.append(result.get("Approvers_List"))
+                            if result.get("error")!=None:
+                                failed_reason_list.append(result.get("error"))
+                                error_list.append(sap_items)
+                            if result.get("Approvers_List")!=None:
+                                Approvers_List1_array.append(result.get("Approvers_List"))
 
-                    called_count_710=called_count_710+1
-                    result_710=for_710(PRF,bamboo_input,emp_id,bamboo_name_id,bamboo_ID,date_for_bamboo,converted_input)
-                    if result_710.get("error")!=None:
-                        failed_reason_list.append(result_710.get("error"))
-                        error_list.append(sap_items)
-                    if result_710.get("Approvers_List")!=None:
-                        Approvers_List1_array.append(result_710.get("Approvers_List"))
-                    continue
+                            called_count_710=called_count_710+1
+                            result_710=for_710(PRF,bamboo_input,emp_id,bamboo_name_id,bamboo_ID,date_for_bamboo,converted_input)
+                            if result_710.get("error")!=None:
+                                failed_reason_list.append(result_710.get("error"))
+                                error_list.append(sap_items)
+                            if result_710.get("Approvers_List")!=None:
+                                Approvers_List1_array.append(result_710.get("Approvers_List"))
+                            continue
 
             except Exception as e:
                 failed_reason_list.append( f"${e} while adding new conditions")
