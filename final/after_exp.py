@@ -260,12 +260,12 @@ def main(input):
                         last_pl_date=datetime.strptime(last_pl_date_str, "%Y-%m-%d %H:%M:%S")
                     elif "/" in last_pl_date:
                         from datetime import datetime
-                        input_datetime = datetime.strptime(last_pl_date, "%d/%m/%Y %H:%M:%S UTC")
+                        input_datetime = datetime.strptime(last_pl_date, "%Y/%m/%d %H:%M:%S UTC")
                         last_pl_date_str = input_datetime.strftime("%Y-%m-%d %H:%M:%S")
                         last_pl_date=datetime.strptime(last_pl_date_str, "%Y-%m-%d %H:%M:%S")
                     elif "-" in last_pl_date:
                         from datetime import datetime
-                        input_datetime = datetime.strptime(last_pl_date, "%d-%m-%Y %H:%M:%S UTC")
+                        input_datetime = datetime.strptime(last_pl_date, "%Y-%m-%d %H:%M:%S UTC")
                         last_pl_date_str = input_datetime.strftime("%Y-%m-%d %H:%M:%S")
                         last_pl_date=datetime.strptime(last_pl_date_str, "%Y-%m-%d %H:%M:%S")
                     else:
@@ -286,17 +286,17 @@ def main(input):
                 if last_pr_date != None and  last_pr_date !="":
                     if "." in last_pr_date:
                         from datetime import datetime
-                        input_datetime = datetime.strptime(last_pr_date, "%d.%m.%Y %H:%M:%S UTC")
+                        input_datetime = datetime.strptime(last_pr_date, "%Y.%m.%d %H:%M:%S UTC")
                         last_pr_date_str = input_datetime.strftime("%Y-%m-%d %H:%M:%S")
                         last_pr_date=datetime.strptime(last_pr_date_str, "%Y-%m-%d %H:%M:%S")
                     elif "/" in last_pr_date:
                         from datetime import datetime
-                        input_datetime = datetime.strptime(last_pr_date, "%d/%m/%Y %H:%M:%S UTC")
+                        input_datetime = datetime.strptime(last_pr_date, "%Y/%m/%d %H:%M:%S UTC")
                         last_pr_date_str = input_datetime.strftime("%Y-%m-%d %H:%M:%S")
                         last_pr_date=datetime.strptime(last_pr_date_str, "%Y-%m-%d %H:%M:%S")
                     elif "-" in last_pr_date:
                         from datetime import datetime
-                        input_datetime = datetime.strptime(last_pr_date, "%d-%m-%Y %H:%M:%S UTC")
+                        input_datetime = datetime.strptime(last_pr_date, "%Y-%m-%d %H:%M:%S UTC")
                         last_pr_date_str = input_datetime.strftime("%Y-%m-%d %H:%M:%S")
                         last_pr_date=datetime.strptime(last_pr_date_str, "%Y-%m-%d %H:%M:%S")
                     else:
