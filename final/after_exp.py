@@ -392,7 +392,7 @@ def main(input):
                     # then send delete for previous PL and add for new PL only.
                 if (proj_lead!= None and len(proj_lead) >0) and (PRF!= None and len(PRF) >0):
                     if (last_pr_date!=None and last_pl_date!=None):
-                        if (last_pr_date==last_pl_date):
+                        if (last_pr_date.date()==last_pl_date.date()):
                             values_760.append({"condition":1,"items":sap_items,"emp":prev_lead,"emp_type":"prev_lead"})
                             called_count_760=called_count_760+1
                             #calling 760 method to add

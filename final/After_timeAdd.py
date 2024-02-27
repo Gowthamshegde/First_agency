@@ -4,6 +4,7 @@
 # last changed on 02/01/2024 added new field to Project resp to CPROLEAD
 # last changed on 21/02/2024 added exp in list
 # last changed on 21/02/2024 added data formator
+# last chnaged 0n 27/02/2024 added date last rate change
 
 import json
 from datetime import datetime
